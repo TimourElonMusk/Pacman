@@ -24,13 +24,33 @@ def affichage():
         x=480
         y+=50
 
-def coordonnees_depart(): #coordonnees de départ du joueur et des ennemis. Cette fonction peut aussi être appelée lors d'un game over.
-    global coos_joueur, coos_ennemis
-    Canevas.create_oval(coos_joueur[0],coos_joueur[1],fill='yellow') #joueur
-    Canevas.create_polygon(coos_ennemis[0][0],coos_ennemis[0][1],coos_ennemis[0][2],fill='brown') #ennemi 1
-    Canevas.create_polygon(coos_ennemis[1][0],coos_ennemis[1][1],coos_ennemis[1][2],fill='brown') #ennemi 2
-    Canevas.create_polygon(coos_ennemis[2][0],coos_ennemis[2][1],coos_ennemis[2][2],fill='brown') #ennemi 3
-    Canevas.create_polygon(coos_ennemis[3][0],coos_ennemis[3][1],coos_ennemis[3][2],fill='brown') #ennemi 4
+def coordonnees_depart(): #coordonnees de départ du joueur et des ennemis.
+    global coos_joueur, coos_ennemis, joueur, ennemi1, ennemi2, ennemi3, ennemi4
+    joueur=Canevas.create_oval(coos_joueur[0],coos_joueur[1],fill='yellow')
+    ennemi1=Canevas.create_polygon(coos_ennemis[0][0],coos_ennemis[0][1],coos_ennemis[0][2],fill='brown')
+    ennemi2=Canevas.create_polygon(coos_ennemis[1][0],coos_ennemis[1][1],coos_ennemis[1][2],fill='brown')
+    ennemi3=Canevas.create_polygon(coos_ennemis[2][0],coos_ennemis[2][1],coos_ennemis[2][2],fill='brown')
+    ennemi4=Canevas.create_polygon(coos_ennemis[3][0],coos_ennemis[3][1],coos_ennemis[3][2],fill='brown')
+
+def joueur_droite(ev=None):
+    global coos_joueur
+    [a,b,c,d] = Canevas.coords(joueur)
+    Canevas.coords(joueur,a+50,b,c+50,d)
+
+def joueur_gauche(ev=None):
+    global coos_joueur
+    [a,b,c,d] = Canevas.coords(joueur)
+    Canevas.coords(joueur,a-50,b,c-50,d)
+
+def joueur_haut(ev=None):
+    global coos_joueur
+    [a,b,c,d] = Canevas.coords(joueur)
+    Canevas.coords(joueur,a,b-50,c,d-50)
+
+def joueur_bas(ev=None):
+    global coos_joueur
+    [a,b,c,d] = Canevas.coords(joueur)
+    Canevas.coords(joueur,a,b+50,c,d+50)
 ##########################################################
 ##########    Variables ##################################
 ##########################################################
@@ -72,7 +92,10 @@ font = Font(family='Arial', size=200)
 ###########################################################
 ########### Receptionnaire d'évènement ####################
 ###########################################################
-
+Canevas.bind_all('<Right>',joueur_droite)
+Canevas.bind_all('<Left>',joueur_gauche)
+Canevas.bind_all('<Up>',joueur_haut)
+Canevas.bind_all('<Down>',joueur_bas)
 ##########################################################
 ############# Programme principal ########################
 ##########################################################
