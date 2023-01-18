@@ -26,7 +26,7 @@ def affichage():
 
 def coordonnees_depart(): #coordonnees de départ du joueur et des ennemis. Cette fonction peut aussi être appelée lors d'un game over.
     global coos_joueur, coos_ennemis
-    Canevas.create_oval(coos_joueur[0]-25,coos_joueur[1]-25,coos_joueur[0]+25,coos_joueur[1]+25,fill='yellow') #joueur
+    Canevas.create_oval(coos_joueur[0],coos_joueur[1],fill='yellow') #joueur
     Canevas.create_polygon(coos_ennemis[0][0],coos_ennemis[0][1],coos_ennemis[0][2],fill='brown') #ennemi 1
     Canevas.create_polygon(coos_ennemis[1][0],coos_ennemis[1][1],coos_ennemis[1][2],fill='brown') #ennemi 2
     Canevas.create_polygon(coos_ennemis[2][0],coos_ennemis[2][1],coos_ennemis[2][2],fill='brown') #ennemi 3
@@ -52,7 +52,7 @@ donnees_cases=[[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3], #ligne 0 (bordure haut
                [3,0,0,0,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,3], #ligne 14
                [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]] #ligne 15 (bordure bas)
 
-coos_joueur=[980,485]
+coos_joueur=[[955,460],[1005,510]] 
 
 #points : haut, bas-gauche, bas-droite
 coos_ennemis=[[[530,165],[510,205],[550,205]],      #haut-gauche
