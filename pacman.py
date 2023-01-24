@@ -33,25 +33,43 @@ def coordonnees_depart(): #coordonnees de départ du joueur et des ennemis.
     ennemi4=Canevas.create_polygon(coos_ennemis[3][0],coos_ennemis[3][1],coos_ennemis[3][2],fill='brown')
 
 def joueur_droite(ev=None):
-    global coos_joueur
-    [a,b,c,d] = Canevas.coords(joueur)
-    Canevas.coords(joueur,a+50,b,c+50,d)
+    global direction
+    direction='droite'
+    avance()
 
 def joueur_gauche(ev=None):
-    global coos_joueur
-    [a,b,c,d] = Canevas.coords(joueur)
-    Canevas.coords(joueur,a-50,b,c-50,d)
+    global direction
+    direction='gauche'
+    avance()
 
 def joueur_haut(ev=None):
-    global coos_joueur
-    [a,b,c,d] = Canevas.coords(joueur)
-    Canevas.coords(joueur,a,b-50,c,d-50)
+    global direction
+    direction='haut'
+    avance()
 
 def joueur_bas(ev=None):
-    global coos_joueur
-    [a,b,c,d] = Canevas.coords(joueur)
-    Canevas.coords(joueur,a,b+50,c,d+50)
-    
+    global direction
+    direction='bas'
+    avance()
+
+def avance():
+    if direction=='droite':
+        [a,b,c,d] = Canevas.coords(joueur)
+        Canevas.coords(joueur,a+2.5,b,c+2.5,d)
+        Mafenetre.after(2, avance)
+    if direction=='gauche':
+        [a,b,c,d] = Canevas.coords(joueur)
+        Canevas.coords(joueur,a-2.5,b,c-2.5,d)
+        Mafenetre.after(2, avance)
+    if direction=='haut':
+        [a,b,c,d] = Canevas.coords(joueur)
+        Canevas.coords(joueur,a,b-2.5,c,d-2.5)
+        Mafenetre.after(2, avance)
+    if direction=='bas':
+        [a,b,c,d] = Canevas.coords(joueur)
+        Canevas.coords(joueur,a,b+2.5,c,d+2.5)
+        Mafenetre.after(2, avance)
+
 def conversion(x,y): #retourne les coordonées i et j
     convX=1.0
     convY=1.0
@@ -101,7 +119,7 @@ coos_ennemis=[[[530,165],[510,205],[550,205]],      #haut-gauche
 Mafenetre = Tk()
 Mafenetre.title("Titre")
 Canevas = Canvas(Mafenetre,width=1920,height=1080,bg ='black')
-Mafenetre.attributes("-fullscreen", True)
+#Mafenetre.attributes("-fullscreen", True)
 Canevas.pack()
 font = Font(family='Arial', size=200)
 ###########################################################
