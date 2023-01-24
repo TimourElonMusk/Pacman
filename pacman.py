@@ -51,6 +51,21 @@ def joueur_bas(ev=None):
     global coos_joueur
     [a,b,c,d] = Canevas.coords(joueur)
     Canevas.coords(joueur,a,b+50,c,d+50)
+    
+def conversion(x,y):
+    convX=1.0
+    convY=1.0
+    while x>480:
+        x-=25
+        convX+=0.5
+    while y>135:
+        y-=25
+        convY+=0.5
+    if convX<1:
+        convX=1
+    if convY<1:
+        convY=1
+    return [int(convX),int(convY)]
 ##########################################################
 ##########    Variables ##################################
 ##########################################################
