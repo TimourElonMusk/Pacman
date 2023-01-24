@@ -52,7 +52,7 @@ def joueur_bas(ev=None):
     [a,b,c,d] = Canevas.coords(joueur)
     Canevas.coords(joueur,a,b+50,c,d+50)
     
-def conversion(x,y):
+def conversion(x,y): #retourne les coordonées i et j
     convX=1.0
     convY=1.0
     while x>480:
