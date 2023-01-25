@@ -55,29 +55,42 @@ def joueur_bas(ev=None):
 def avance():
     if direction=='droite':
         [a,b,c,d] = Canevas.coords(joueur)
-        Canevas.coords(joueur,a+2.5,b,c+2.5,d)
+        Canevas.coords(joueur,a+4,b,c+4,d)
         touche_mur(a,b,c,d)
         Mafenetre.after(2, avance)
     if direction=='gauche':
         [a,b,c,d] = Canevas.coords(joueur)
-        Canevas.coords(joueur,a-2.5,b,c-2.5,d)
+        Canevas.coords(joueur,a-4,b,c-4,d)
         touche_mur(a,b,c,d)
         Mafenetre.after(2, avance)
     if direction=='haut':
         [a,b,c,d] = Canevas.coords(joueur)
-        Canevas.coords(joueur,a,b-2.5,c,d-2.5)
+        Canevas.coords(joueur,a,b-4,c,d-4)
         touche_mur(a,b,c,d)
         Mafenetre.after(2, avance)
     if direction=='bas':
         [a,b,c,d] = Canevas.coords(joueur)
-        Canevas.coords(joueur,a,b+2.5,c,d+2.5)
+        Canevas.coords(joueur,a,b+4,c,d+4)
         touche_mur(a,b,c,d)
         Mafenetre.after(2, avance)
 
-def touche_mur(a,b,c,d): #FONCTION A TERMINER (PAS DEFINI POUR TOUS LES MURS + QUELQUES BUGS DE COLLISION)
+def touche_mur(a,b,c,d):
     global direction
-    if conversion(a-0.1,b-0.1)[0]==1 or (conversion(a+0.1,b+0.1)[0]==3 and conversion(a+0.1,b+0.1)[1]<9 and conversion(a+0.5,b+0.1)[1]>2 and direction=='droite'):
-        Canevas.coords(joueur,a+0.15,b,c+0.15,d)
+    #droite
+    if ((conversion(a+1,b+1)[0]==3 and ((conversion(c+1,d+1)[1]>=4 and conversion(a+1,b+1)[1]<=7) or (conversion(c+1,d+1)[1]>=10 and conversion(a+1,b+1)[1]<=13))) or (conversion(a+1,b+1)[0]==9 and ((conversion(c+1,d+1)[1]>=2 and conversion(a+1,b+1)[1]<=7) or (conversion(c+1,d+1)[1]>=10 and conversion(a+1,b+1)[1]<=15))) or (conversion(a+1,b+1)[0]==13 and ((conversion(c+1,d+1)[1]>=4 and conversion(a+1,b+1)[1]<=7) or (conversion(c+1,d+1)[1]>=10 and conversion(a+1,b+1)[1]<=13))) or conversion(a+1,b+1)[0]==19) and direction=='droite':
+        Canevas.coords(joueur,a-2,b,c-2,d)
+        direction=None
+    #gauche
+    if (conversion(c,d)[0]==2 or (conversion(c,d)[0]==8 and ((conversion(c,d)[1]>=4 and conversion(a+0.1,b+0.1)[1]<=7) or (conversion(c,d)[1]>=10 and conversion(a+0.1,b+0.1)[1]<=13))) or (conversion(a+1,b+1)[0]==11 and ((conversion(c+1,d+1)[1]>=2 and conversion(a+1,b+1)[1]<=7) or (conversion(c+1,d+1)[1]>=10 and conversion(a+1,b+1)[1]<=15))) or (conversion(c,d)[0]==18 and ((conversion(c,d)[1]>=4 and conversion(a+0.1,b+0.1)[1]<=7) or (conversion(c,d)[1]>=10 and conversion(a+0.1,b+0.1)[1]<=13)))) and direction=='gauche':
+        Canevas.coords(joueur,a+2,b,c+2,d)
+        direction=None
+    #haut
+    if (conversion(c,d)[1]==2 or ((conversion(c,d)[0]>=4 and conversion(a,b)[0]<=7) and (conversion(c,d)[1]==8 or conversion(c,d)[1]==14)) or (((conversion(c,d)[0]==8 or conversion(c,d)[0]==9) or (conversion(c,d)[0]==12 or conversion(c,d)[0]==13)) and conversion(c,d)[1]==12) or ((conversion(c,d)[0]>=14 and conversion(a,b)[0]<=17) and (conversion(c,d)[1]==8 or conversion(c,d)[1]==14)) or (((conversion(c,d)[0]==10) or (conversion(c,d)[0]==11)) and conversion(c,d)[1]==8) or (conversion(a,b)[0]==11 and conversion(c,d)[1]==8)) and direction=='haut':
+        Canevas.coords(joueur,a,b+2,c,d+2)
+        direction=None
+    #bas
+    if (((conversion(c,d)[0]>=4 and conversion(a,b)[0]<=7) and (conversion(a,b)[1]==3 or conversion(a,b)[1]==9)) or ((conversion(a,b)[0]>=8 and conversion(a,b)[0]<=13) and conversion(a+2.1,b+2.1)[1]==9) or ((conversion(c,d)[0]>=14 and conversion(a,b)[0]<=17) and (conversion(a,b)[1]==3 or conversion(a,b)[1]==9)) or conversion(a,b)[1]==15) and direction=='bas':
+        Canevas.coords(joueur,a,b-2,c,d-2)
         direction=None
 
 def conversion(x,y): #retourne les coordonées i et j
