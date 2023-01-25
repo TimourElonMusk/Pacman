@@ -74,9 +74,11 @@ def avance():
         touche_mur(a,b,c,d)
         Mafenetre.after(2, avance)
 
-def touche_mur(a,b,c,d): #FONCTION A TERMINER (NE MARCHE PAS)
-    if conversion(a+25,b+25)[0]==1:
-        direction=''
+def touche_mur(a,b,c,d): #FONCTION A TERMINER (PAS DEFINI POUR TOUS LES MURS + QUELQUES BUGS DE COLLISION)
+    global direction
+    if conversion(a-0.1,b-0.1)[0]==1 or (conversion(a+0.1,b+0.1)[0]==3 and conversion(a+0.1,b+0.1)[1]<9 and conversion(a+0.5,b+0.1)[1]>2 and direction=='droite'):
+        Canevas.coords(joueur,a+0.15,b,c+0.15,d)
+        direction=None
 
 def conversion(x,y): #retourne les coordonées i et j
     convX=1.0
