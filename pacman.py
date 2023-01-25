@@ -56,19 +56,27 @@ def avance():
     if direction=='droite':
         [a,b,c,d] = Canevas.coords(joueur)
         Canevas.coords(joueur,a+2.5,b,c+2.5,d)
+        touche_mur(a,b,c,d)
         Mafenetre.after(2, avance)
     if direction=='gauche':
         [a,b,c,d] = Canevas.coords(joueur)
         Canevas.coords(joueur,a-2.5,b,c-2.5,d)
+        touche_mur(a,b,c,d)
         Mafenetre.after(2, avance)
     if direction=='haut':
         [a,b,c,d] = Canevas.coords(joueur)
         Canevas.coords(joueur,a,b-2.5,c,d-2.5)
+        touche_mur(a,b,c,d)
         Mafenetre.after(2, avance)
     if direction=='bas':
         [a,b,c,d] = Canevas.coords(joueur)
         Canevas.coords(joueur,a,b+2.5,c,d+2.5)
+        touche_mur(a,b,c,d)
         Mafenetre.after(2, avance)
+
+def touche_mur(a,b,c,d): #FONCTION A TERMINER (NE MARCHE PAS)
+    if conversion(a+25,b+25)[0]==1:
+        direction=''
 
 def conversion(x,y): #retourne les coordonées i et j
     convX=1.0
