@@ -34,23 +34,27 @@ def coordonnees_depart(): #coordonnees de départ du joueur et des ennemis.
 
 def joueur_droite(ev=None):
     global direction
-    direction='droite'
-    avance()
+    if direction!='droite':
+        direction='droite'
+        avance()
 
 def joueur_gauche(ev=None):
     global direction
-    direction='gauche'
-    avance()
+    if direction!='gauche':
+        direction='gauche'
+        avance()
 
 def joueur_haut(ev=None):
     global direction
-    direction='haut'
-    avance()
+    if direction!='haut':
+        direction='haut'
+        avance()
 
 def joueur_bas(ev=None):
     global direction
-    direction='bas'
-    avance()
+    if direction!='bas':
+        direction='bas'
+        avance()
 
 def avance():
     if direction=='droite':
@@ -89,7 +93,7 @@ def touche_mur(a,b,c,d):
         Canevas.coords(joueur,a,b+2,c,d+2)
         direction=None
     #bas
-    if (((conversion(c,d)[0]>=4 and conversion(a,b)[0]<=7) and (conversion(a,b)[1]==3 or conversion(a,b)[1]==9)) or ((conversion(a,b)[0]>=8 and conversion(a,b)[0]<=13) and conversion(a+2.1,b+2.1)[1]==9) or ((conversion(c,d)[0]>=14 and conversion(a,b)[0]<=17) and (conversion(a,b)[1]==3 or conversion(a,b)[1]==9)) or conversion(a,b)[1]==15) and direction=='bas':
+    if (((conversion(c,d)[0]>=4 and conversion(a,b)[0]<=7) and (conversion(a,b)[1]==3 or conversion(a+0.1,b+0.1)[1]==9)) or ((conversion(a+0.1,b+0.1)[0]>=8 and conversion(a+0.1,b+0.1)[0]<=13) and conversion(a+2.1,b+2.1)[1]==9) or ((conversion(c,d)[0]>=14 and conversion(a,b)[0]<=17) and (conversion(a,b)[1]==3 or conversion(a+0.1,b+0.1)[1]==9)) or conversion(a,b)[1]==15) and direction=='bas':
         Canevas.coords(joueur,a,b-2,c,d-2)
         direction=None
 
@@ -136,6 +140,7 @@ coos_ennemis=[[[530,165],[510,205],[550,205]],      #haut-gauche
               [[530,815],[510,855],[550,855]],      #bas-gauche
               [[1380,815],[1360,855],[1400,855]]]   #bas-droite
               
+direction=None
 #########################################################
 ########## Interface graphique ##########################
 ##########################################################
