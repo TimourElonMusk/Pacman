@@ -57,26 +57,18 @@ def joueur_bas(ev=None):
         avance()
 
 def avance():
+    [a,b,c,d] = Canevas.coords(joueur)
     if direction=='droite':
-        [a,b,c,d] = Canevas.coords(joueur)
         Canevas.coords(joueur,a+4,b,c+4,d)
-        touche_mur(a,b,c,d)
-        Mafenetre.after(2, avance)
     if direction=='gauche':
-        [a,b,c,d] = Canevas.coords(joueur)
         Canevas.coords(joueur,a-4,b,c-4,d)
-        touche_mur(a,b,c,d)
-        Mafenetre.after(2, avance)
     if direction=='haut':
-        [a,b,c,d] = Canevas.coords(joueur)
         Canevas.coords(joueur,a,b-4,c,d-4)
-        touche_mur(a,b,c,d)
-        Mafenetre.after(2, avance)
     if direction=='bas':
-        [a,b,c,d] = Canevas.coords(joueur)
         Canevas.coords(joueur,a,b+4,c,d+4)
-        touche_mur(a,b,c,d)
-        Mafenetre.after(2, avance)
+    Canevas.update()
+    touche_mur(a,b,c,d)
+    Mafenetre.after(2, avance)
 
 def touche_mur(a,b,c,d):
     global direction
