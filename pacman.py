@@ -56,19 +56,29 @@ def avance():
     i = conversion(a,b)[0] 
     j = conversion(a,b)[1] #coordonnées i,j du joueur
     if direction=='droite':
-        if donnees_cases[j][i+1]!=3:
+        if donnees_cases[j][i+1]!=3: #si pas de mur, avance
             Canevas.coords(joueur,a+50,b,c+50,d)
-            #si  piece : ramasse
-            
+            if donnees_cases[j][i]==1: #si  piece : ramasse
+                donnees_cases[j][i]=0 #remplace par du vide
+                Canevas.create_oval(a+20,b+20,c-20,d-20,fill='black')
     if direction=='gauche':
         if donnees_cases[j][i-1]!=3:
             Canevas.coords(joueur,a-50,b,c-50,d)
+            if donnees_cases[j][i]==1: #si  piece : ramasse
+                donnees_cases[j][i]=0 #remplace par du vide
+                Canevas.create_oval(a+20,b+20,c-20,d-20,fill='black')
     if direction=='haut':
         if donnees_cases[j-1][i]!=3:
             Canevas.coords(joueur,a,b-50,c,d-50)
+            if donnees_cases[j][i]==1: #si  piece : ramasse
+                donnees_cases[j][i]=0 #remplace par du vide
+                Canevas.create_oval(a+20,b+20,c-20,d-20,fill='black')
     if direction=='bas':
         if donnees_cases[j+1][i]!=3:
             Canevas.coords(joueur,a,b+50,c,d+50)
+            if donnees_cases[j][i]==1: #si  piece : ramasse
+                donnees_cases[j][i]=0 #remplace par du vide
+                Canevas.create_oval(a+20,b+20,c-20,d-20,fill='black')
     Canevas.update()
     Mafenetre.after(200, avance)
 
