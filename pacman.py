@@ -96,6 +96,11 @@ def conversion(x,y): #retourne les coordonées i et j
     if convY<1:
         convY=1
     return [int(convX),int(convY)]
+
+def score(): #augmentation score
+    Canevas.create_text(1200,30,text="Score:",fill="red",font=Mapolice)
+    Canevas.create_text,text=0,fill="red",font=Mapolice)
+
 ##########################################################
 ##########    Variables ##################################
 ##########################################################
@@ -134,8 +139,7 @@ Mafenetre.title("Titre")
 Canevas = Canvas(Mafenetre,width=1920,height=1080,bg ='black')
 #Mafenetre.attributes("-fullscreen", True)
 Canevas.pack()
-Mapolice = Font(family='auto digital', size=100)
-Canevas.create_text(200,200,text=0000,fill="red",font=Mapolice)
+Mapolice = Font(family='auto digital', size=40)
 ###########################################################
 ########### Receptionnaire d'évènement ####################
 ###########################################################
