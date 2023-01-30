@@ -6,12 +6,10 @@ from tkinter.font import Font
 ##########################################################
 ##########    Fonctions ##################################
 ##########################################################
-def affichage():
+def affichage(): #affichage du terrain de jeu
     global donnees_cases
-    x = 480 #coordonnées x de la case
-    y = 135 #coordonnées y de la case
-    Mapolice = Font(family='auto digital', size=100)
-    Canevas.create_text(200,200,text=0000,fill="red",font=Mapolice)
+    x = 480 #coordonnées x de la case (à gauche)
+    y = 135 #coordonnées y de la case (en haut)
     for ligne in range(16): #ligne
         for e in donnees_cases[ligne]:  #[ligne] = sous-liste dans laquelle on parcours par élément
             if e==0:
@@ -34,62 +32,45 @@ def coordonnees_depart(): #coordonnees de départ du joueur et des ennemis.
     ennemi3=Canevas.create_polygon(coos_ennemis[2][0],coos_ennemis[2][1],coos_ennemis[2][2],fill='brown')
     ennemi4=Canevas.create_polygon(coos_ennemis[3][0],coos_ennemis[3][1],coos_ennemis[3][2],fill='brown')
 
-def joueur_droite(ev=None):
+def joueur_droite(ev=None): #si touche de droite cliquée
     global direction
     if direction!='droite':
         direction='droite'
-        avance()
 
 def joueur_gauche(ev=None):
     global direction
     if direction!='gauche':
         direction='gauche'
-        avance()
 
 def joueur_haut(ev=None):
     global direction
     if direction!='haut':
         direction='haut'
-        avance()
-
 def joueur_bas(ev=None):
     global direction
     if direction!='bas':
         direction='bas'
-        avance()
 
 def avance():
     [a,b,c,d] = Canevas.coords(joueur)
+    i = conversion(a,b)[0] 
+    j = conversion(a,b)[1] #coordonnées i,j du joueur
     if direction=='droite':
-        Canevas.coords(joueur,a+4,b,c+4,d)
+        if donnees_cases[j][i+1]!=3:
+            Canevas.coords(joueur,a+50,b,c+50,d)
+            #si  piece : ramasse
+            
     if direction=='gauche':
-        Canevas.coords(joueur,a-4,b,c-4,d)
+        if donnees_cases[j][i-1]!=3:
+            Canevas.coords(joueur,a-50,b,c-50,d)
     if direction=='haut':
-        Canevas.coords(joueur,a,b-4,c,d-4)
+        if donnees_cases[j-1][i]!=3:
+            Canevas.coords(joueur,a,b-50,c,d-50)
     if direction=='bas':
-        Canevas.coords(joueur,a,b+4,c,d+4)
+        if donnees_cases[j+1][i]!=3:
+            Canevas.coords(joueur,a,b+50,c,d+50)
     Canevas.update()
-    touche_mur(a,b,c,d)
-    Mafenetre.after(2, avance)
-
-def touche_mur(a,b,c,d):
-    global direction
-    #droite
-    if ((conversion(a+1,b+1)[0]==3 and ((conversion(c+1,d+1)[1]>=4 and conversion(a+1,b+1)[1]<=7) or (conversion(c+1,d+1)[1]>=10 and conversion(a+1,b+1)[1]<=13))) or (conversion(a+1,b+1)[0]==9 and ((conversion(c+1,d+1)[1]>=2 and conversion(a+1,b+1)[1]<=7) or (conversion(c+1,d+1)[1]>=10 and conversion(a+1,b+1)[1]<=15))) or (conversion(a+1,b+1)[0]==13 and ((conversion(c+1,d+1)[1]>=4 and conversion(a+1,b+1)[1]<=7) or (conversion(c+1,d+1)[1]>=10 and conversion(a+1,b+1)[1]<=13))) or conversion(a+1,b+1)[0]==19) and direction=='droite':
-        Canevas.coords(joueur,a-2,b,c-2,d)
-        direction=None
-    #gauche
-    if (conversion(c,d)[0]==2 or (conversion(c,d)[0]==8 and ((conversion(c,d)[1]>=4 and conversion(a+0.1,b+0.1)[1]<=7) or (conversion(c,d)[1]>=10 and conversion(a+0.1,b+0.1)[1]<=13))) or (conversion(a+1,b+1)[0]==11 and ((conversion(c+1,d+1)[1]>=2 and conversion(a+1,b+1)[1]<=7) or (conversion(c+1,d+1)[1]>=10 and conversion(a+1,b+1)[1]<=15))) or (conversion(c,d)[0]==18 and ((conversion(c,d)[1]>=4 and conversion(a+0.1,b+0.1)[1]<=7) or (conversion(c,d)[1]>=10 and conversion(a+0.1,b+0.1)[1]<=13)))) and direction=='gauche':
-        Canevas.coords(joueur,a+2,b,c+2,d)
-        direction=None
-    #haut
-    if (conversion(c,d)[1]==2 or ((conversion(c,d)[0]>=4 and conversion(a,b)[0]<=7) and (conversion(c,d)[1]==8 or conversion(c,d)[1]==14)) or (((conversion(c,d)[0]==8 or conversion(c,d)[0]==9) or (conversion(c,d)[0]==12 or conversion(c,d)[0]==13)) and conversion(c,d)[1]==12) or ((conversion(c,d)[0]>=14 and conversion(a,b)[0]<=17) and (conversion(c,d)[1]==8 or conversion(c,d)[1]==14)) or (((conversion(c,d)[0]==10) or (conversion(c,d)[0]==11)) and conversion(c,d)[1]==8) or (conversion(a,b)[0]==11 and conversion(c,d)[1]==8)) and direction=='haut':
-        Canevas.coords(joueur,a,b+2,c,d+2)
-        direction=None
-    #bas
-    if (((conversion(c,d)[0]>=4 and conversion(a,b)[0]<=7) and (conversion(a,b)[1]==3 or conversion(a+0.1,b+0.1)[1]==9)) or ((conversion(a+0.1,b+0.1)[0]>=8 and conversion(a+0.1,b+0.1)[0]<=13) and conversion(a+2.1,b+2.1)[1]==9) or ((conversion(c,d)[0]>=14 and conversion(a,b)[0]<=17) and (conversion(a,b)[1]==3 or conversion(a+0.1,b+0.1)[1]==9)) or conversion(a,b)[1]==15) and direction=='bas':
-        Canevas.coords(joueur,a,b-2,c,d-2)
-        direction=None
+    Mafenetre.after(200, avance)
 
 def conversion(x,y): #retourne les coordonées i et j
     convX=1.0
@@ -126,14 +107,14 @@ donnees_cases=[[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3], #ligne 0 (bordure haut
                [3,0,0,0,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,3], #ligne 14
                [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]] #ligne 15 (bordure bas)
 
-coos_joueur=[[955,460],[1005,510]] 
+coos_joueur=[[955,460],[1005,510]]
 
 #points : haut, bas-gauche, bas-droite
 coos_ennemis=[[[530,165],[510,205],[550,205]],      #haut-gauche
               [[1380,165],[1360,205],[1400,205]],   #haut-droite
               [[530,815],[510,855],[550,855]],      #bas-gauche
               [[1380,815],[1360,855],[1400,855]]]   #bas-droite
-              
+
 direction=None
 #########################################################
 ########## Interface graphique ##########################
@@ -156,5 +137,6 @@ Canevas.bind_all('<Down>',joueur_bas)
 ##########################################################
 affichage()
 coordonnees_depart()
+avance()
 ###################### FIN ###############################
 Mafenetre.mainloop()
