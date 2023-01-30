@@ -10,7 +10,7 @@ def affichage():
     global donnees_cases
     x = 480 #coordonnées x de la case
     y = 135 #coordonnées y de la case
-    Mapolice = Font(family='Liberation Serif', size=100)
+    Mapolice = Font(family='auto digital', size=100)
     Canevas.create_text(200,200,text=0000,fill="red",font=Mapolice)
     for ligne in range(16): #ligne
         for e in donnees_cases[ligne]:  #[ligne] = sous-liste dans laquelle on parcours par élément
