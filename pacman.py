@@ -104,7 +104,7 @@ def joueur_avance():
     Canevas.update()
     Mafenetre.after(200, joueur_avance) #on relance la fonction
 
-def ennemis_avancent(): #A FINIR
+def ennemis_avancent(): #A FINIR (la fonction marche passs)
     global coos_ennemis, ennemi1, ennemi2, ennemi3, ennemi4
     [e1,f1,g1,h1] = Canevas.coords(ennemi1) #e,f=coordonnées x y en haut à gauche de l'ennemi / g,h=coordonnées x y en bas à droite de l'ennemi
     [e2,f2,g2,h2] = Canevas.coords(ennemi2)
