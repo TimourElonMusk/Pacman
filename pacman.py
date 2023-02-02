@@ -186,7 +186,7 @@ Mafenetre.title("Titre")
 Canevas = Canvas(Mafenetre,width=1920,height=1080,bg ='black')
 #Mafenetre.attributes("-fullscreen", True)
 Canevas.pack()
-Mapolice = Font(family='DigitalSerial-Xbold', size=40)
+Mapolice = Font(family='Auto Digital', size=40)
 ###########################################################
 ########### Receptionnaire d'évènement ####################
 ###########################################################
