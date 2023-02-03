@@ -25,12 +25,12 @@ def affichage(): #affichage du terrain de jeu
         y+=50 #une ligne en dessous
 
 def coordonnees_depart(): #coordonnees de départ du joueur et des ennemis.
-    global coos_joueur, coos_ennemis, joueur, ennemi1, ennemi2, ennemi3, ennemi4
-    joueur=Canevas.create_oval(coos_joueur[0],coos_joueur[1],fill='yellow')
-    ennemi1=Canevas.create_polygon(coos_ennemis[0][0],coos_ennemis[0][1],coos_ennemis[0][2],fill='brown')
-    ennemi2=Canevas.create_polygon(coos_ennemis[1][0],coos_ennemis[1][1],coos_ennemis[1][2],fill='brown')
-    ennemi3=Canevas.create_polygon(coos_ennemis[2][0],coos_ennemis[2][1],coos_ennemis[2][2],fill='brown')
-    ennemi4=Canevas.create_polygon(coos_ennemis[3][0],coos_ennemis[3][1],coos_ennemis[3][2],fill='brown')
+    global joueur, ennemis
+    joueur=Canevas.create_oval(955,460, 1005,510,fill='yellow')
+    ennemis=[Canevas.create_polygon(530,165, 510,205, 550,205, fill='brown'),
+             Canevas.create_polygon(1380,165, 1360,205, 1400,205, fill='brown'),
+             Canevas.create_polygon(530,815, 510,855, 550,855, fill='brown'),
+             Canevas.create_polygon(1380,815, 1360,855, 1400,855, fill='brown')]
 
 def joueur_droite(ev=None): #si touche droite cliquée
     global direction_joueur
@@ -106,10 +106,12 @@ def joueur_avance():
 
 def ennemis_avancent(): #A FINIR (la fonction marche passs)
     global coos_ennemis, ennemi1, ennemi2, ennemi3, ennemi4
-    [e1,f1,g1,h1] = Canevas.coords(ennemi1) #e,f=coordonnées x y en haut à gauche de l'ennemi / g,h=coordonnées x y en bas à droite de l'ennemi
-    [e2,f2,g2,h2] = Canevas.coords(ennemi2)
-    [e3,f3,g3,h3] = Canevas.coords(ennemi3)
-    [e4,f4,g4,h4] = Canevas.coords(ennemi4)
+    #liste des coordonnees x,y des ennemis :
+    ennemis_XY = [Canevas.coords(ennemis[0]), #ennemi 1
+                  Canevas.coords(ennemis[1]), #ennemi 2
+                  Canevas.coords(ennemis[2]), #ennemi 3
+                  Canevas.coords(ennemis[3])] #ennemi 4
+    
     ennemis_IJ=[] #liste des coordonnées i et j des ennemis
     ennemis_IJ.append(conversion(e1,f1)) #ajout des coordonnées i et j de l'ennemi 1
     ennemis_IJ.append(conversion(e2,f2)) #ajout des coordonnées i et j de l'ennemi 2
@@ -140,7 +142,7 @@ def conversion(x,y): #retourne les coordonées i et j
 def score(): #augmentation score
     global chiffre_score
     Canevas.delete(chiffre_score)
-    chiffre_score=Canevas.create_text(1300,75,text=varScore,fill="red",font=Mapolice)
+    chiffre_score=Canevas.create_text(1300,75,text=varScore,fill="#34eba1",font=Mapolice)
 
 ##########################################################
 ##########    Variables ##################################
@@ -162,14 +164,6 @@ donnees_cases=[[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3], #ligne 0 (bordure haut
                [3,0,0,0,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,3], #ligne 13
                [3,0,0,0,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,3], #ligne 14
                [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]] #ligne 15 (bordure bas)
-
-coos_joueur=[[955,460],[1005,510]]
-
-#points : haut, bas-gauche, bas-droite
-coos_ennemis=[[[530,165],[510,205],[550,205]],      #haut-gauche
-              [[1380,165],[1360,205],[1400,205]],   #haut-droite
-              [[530,815],[510,855],[550,855]],      #bas-gauche
-              [[1380,815],[1360,855],[1400,855]]]   #bas-droite
 
 direction_joueur=None
 
@@ -202,8 +196,9 @@ coordonnees_depart()
 joueur_avance()
 
 #score :
-Canevas.create_text(1190,75,text="Score:",fill="red",font=Mapolice)
-chiffre_score=Canevas.create_text(1300,75,text=varScore,fill="red",font=Mapolice)
-Canevas.create_text(1382,75,text="/99",fill="red",font=Mapolice)
+Canevas.create_text(1190,75,text="Score:",fill="#34eba1",font=Mapolice)
+chiffre_score=Canevas.create_text(1300,75,text=varScore,fill="#34eba1",font=Mapolice)
+Canevas.create_text(1382,75,text="/99",fill="#34eba1",font=Mapolice)
 ###################### FIN ###############################
 Mafenetre.mainloop()
+    
