@@ -1,7 +1,7 @@
 ########## Importer les modules necessaires ##############
 from tkinter import *
 from tkinter.font import Font
-from random import *
+import random
 import time
 ##########################################################
 ##########    Fonctions ##################################
@@ -53,11 +53,11 @@ def joueur_bas(ev=None): #si touche bas cliquée
         direction_joueur='bas'
 
 def joueur_avance():
-    global deuxieme_couche, varScore
+    global deuxieme_couche_joueur, varScore
     [a,b,c,d] = Canevas.coords(joueur) #a,b=coordonnées x y en haut à gauche du joueur / c,d=coordonnées x y en bas à droite du joueur
     i = conversion(a,b)[0] #coordonnées i du joueur
     j = conversion(a,b)[1] #coordonnées j du joueur
-    Canevas.delete(deuxieme_couche) #on supprime la deuxième couche présente sur le joueur s'il y en a une
+    Canevas.delete(deuxieme_couche_joueur) #on supprime la deuxième couche présente sur le joueur s'il y en a une
     if direction_joueur=='droite':
         if donnees_cases[j][i+1]!=3: #si pas de mur, avance
             Canevas.coords(joueur,a+50,b,c+50,d)
@@ -100,29 +100,33 @@ def joueur_avance():
                 Canevas.create_oval(a+20,b+20,c-20,d-20,fill='black')
     [a,b,c,d]=Canevas.coords(joueur) #on prend les nouvelles coordonnées x y du joueur
     if donnees_cases[j][i]==0: #si le joueur est sur une case vide, il est nécessaire d'appliquer un autre oval jaune sur le joueur pour ne pas voir l'oval noir (quand la pièce a été ramassée)
-        deuxieme_couche=Canevas.create_oval(a+5,b+5,c-5,d-5,fill="yellow",outline="")
+        deuxieme_couche_joueur=Canevas.create_oval(a+5,b+5,c-5,d-5,fill="yellow",outline="")
     Canevas.update()
     Mafenetre.after(200, joueur_avance) #on relance la fonction
 
 def ennemis_avancent(): #A FINIR (la fonction marche passs)
-    global coos_ennemis, ennemi1, ennemi2, ennemi3, ennemi4
+    global ennemis
     #liste des coordonnees x,y des ennemis :
     ennemis_XY = [Canevas.coords(ennemis[0]), #ennemi 1
-                  Canevas.coords(ennemis[1]), #ennemi 2
-                  Canevas.coords(ennemis[2]), #ennemi 3
-                  Canevas.coords(ennemis[3])] #ennemi 4
-    
-    ennemis_IJ=[] #liste des coordonnées i et j des ennemis
-    ennemis_IJ.append(conversion(e1,f1)) #ajout des coordonnées i et j de l'ennemi 1
-    ennemis_IJ.append(conversion(e2,f2)) #ajout des coordonnées i et j de l'ennemi 2
-    ennemis_IJ.append(conversion(e3,f3)) #ajout des coordonnées i et j de l'ennemi 3
-    ennemis_IJ.append(conversion(e4,f4)) #ajout des coordonnées i et j de l'ennemi 4
-    for e in ennemis_IJ:
-        direction_ennemi=random.choice(['droite', 'gauche', 'haut', 'bas'])
-        if direction_ennemi=='droite':
-            if donnees_cases[e[1]][e[0]+1]!=3: #si pas de mur, avance
-                print(0)
-
+                Canevas.coords(ennemis[1]), #ennemi 2
+                Canevas.coords(ennemis[2]), #ennemi 3
+                Canevas.coords(ennemis[3])] #ennemi 4
+    ennemis_IJ=[conversion(ennemis_XY[0][0], ennemis_XY[0][1])] #liste des coordonnées i et j des ennemis
+    direction_ennemi=random.choice(['droite','gauche','haut','bas'])
+    if direction_ennemi=='droite':
+        if donnees_cases[ennemis_IJ[0][1]][ennemis_IJ[0][0]+1]!=3: #si pas de mur, avance
+            Canevas.coords(ennemis[0],ennemis_XY[0][0]+50,ennemis_XY[0][1],ennemis_XY[0][2]+50,ennemis_XY[0][3],ennemis_XY[0][4]+50,ennemis_XY[0][5])
+    if direction_ennemi=='gauche':
+        if donnees_cases[ennemis_IJ[0][1]][ennemis_IJ[0][0]-1]!=3: #si pas de mur, avance
+            Canevas.coords(ennemis[0],ennemis_XY[0][0]-50,ennemis_XY[0][1],ennemis_XY[0][2]-50,ennemis_XY[0][3],ennemis_XY[0][4]-50,ennemis_XY[0][5])        
+    if direction_ennemi=='haut':
+        if donnees_cases[ennemis_IJ[0][1]-1][ennemis_IJ[0][0]]!=3: #si pas de mur, avance
+            Canevas.coords(ennemis[0],ennemis_XY[0][0],ennemis_XY[0][1]-50,ennemis_XY[0][2],ennemis_XY[0][3]-50,ennemis_XY[0][4],ennemis_XY[0][5]-50)
+    if direction_ennemi=='bas':
+        if donnees_cases[ennemis_IJ[0][1]+1][ennemis_IJ[0][0]]!=3: #si pas de mur, avance
+            Canevas.coords(ennemis[0],ennemis_XY[0][0],ennemis_XY[0][1]+50,ennemis_XY[0][2],ennemis_XY[0][3]+50,ennemis_XY[0][4],ennemis_XY[0][5]+50)
+    Canevas.update()
+    Mafenetre.after(200, ennemis_avancent) #on relance la fonction
 
 def conversion(x,y): #retourne les coordonées i et j
     convX=1.0
@@ -167,7 +171,7 @@ donnees_cases=[[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3], #ligne 0 (bordure haut
 
 direction_joueur=None
 
-deuxieme_couche=None
+deuxieme_couche_joueur=None
 
 varScore='00'
 
@@ -194,11 +198,10 @@ Canevas.bind_all('<Down>',joueur_bas)
 affichage()
 coordonnees_depart()
 joueur_avance()
-
+ennemis_avancent()
 #score :
 Canevas.create_text(1190,75,text="Score:",fill="#34eba1",font=Mapolice)
 chiffre_score=Canevas.create_text(1300,75,text=varScore,fill="#34eba1",font=Mapolice)
 Canevas.create_text(1382,75,text="/99",fill="#34eba1",font=Mapolice)
 ###################### FIN ###############################
 Mafenetre.mainloop()
-    
