@@ -55,8 +55,7 @@ def joueur_bas(ev=None): #si touche bas cliquée
 def joueur_avance():
     global deuxieme_couche_joueur, varScore
     [a,b,c,d] = Canevas.coords(joueur) #a,b=coordonnées x y en haut à gauche du joueur / c,d=coordonnées x y en bas à droite du joueur
-    i = conversion(a,b)[0] #coordonnées i du joueur
-    j = conversion(a,b)[1] #coordonnées j du joueur
+    [i,j] = [conversion(a,b)[0],conversion(a,b)[1]] #coordonnées i du joueur
     Canevas.delete(deuxieme_couche_joueur) #on supprime la deuxième couche présente sur le joueur s'il y en a une
     if direction_joueur=='droite':
         if donnees_cases[j][i+1]!=3: #si pas de mur, avance
@@ -111,22 +110,30 @@ def ennemis_avancent(): #A FINIR (la fonction marche passs)
                 Canevas.coords(ennemis[1]), #ennemi 2
                 Canevas.coords(ennemis[2]), #ennemi 3
                 Canevas.coords(ennemis[3])] #ennemi 4
-    ennemis_IJ=[conversion(ennemis_XY[0][0], ennemis_XY[0][1])] #liste des coordonnées i et j des ennemis
+    [i,j]=[conversion(ennemis_XY[0][0], ennemis_XY[0][1])[0],conversion(ennemis_XY[0][0], ennemis_XY[0][1])[1]] #liste des coordonnées i et j des ennemis
     direction_ennemi=random.choice(['droite','gauche','haut','bas'])
     if direction_ennemi=='droite':
-        if donnees_cases[ennemis_IJ[0][1]][ennemis_IJ[0][0]+1]!=3: #si pas de mur, avance
+        if donnees_cases[j][i+1]!=3: #si pas de mur, avance
             Canevas.coords(ennemis[0],ennemis_XY[0][0]+50,ennemis_XY[0][1],ennemis_XY[0][2]+50,ennemis_XY[0][3],ennemis_XY[0][4]+50,ennemis_XY[0][5])
+        else:
+            Mafenetre.after(1, ennemis_avancent) #on relance instantanément la fonction
     if direction_ennemi=='gauche':
-        if donnees_cases[ennemis_IJ[0][1]][ennemis_IJ[0][0]-1]!=3: #si pas de mur, avance
+        if donnees_cases[j][i-1]!=3: #si pas de mur, avance
             Canevas.coords(ennemis[0],ennemis_XY[0][0]-50,ennemis_XY[0][1],ennemis_XY[0][2]-50,ennemis_XY[0][3],ennemis_XY[0][4]-50,ennemis_XY[0][5])        
+        else:
+            Mafenetre.after(1, ennemis_avancent) #on relance instantanément la fonction
     if direction_ennemi=='haut':
-        if donnees_cases[ennemis_IJ[0][1]-1][ennemis_IJ[0][0]]!=3: #si pas de mur, avance
+        if donnees_cases[j-1][i]!=3: #si pas de mur, avance
             Canevas.coords(ennemis[0],ennemis_XY[0][0],ennemis_XY[0][1]-50,ennemis_XY[0][2],ennemis_XY[0][3]-50,ennemis_XY[0][4],ennemis_XY[0][5]-50)
+        else:
+            Mafenetre.after(1, ennemis_avancent) #on relance instantanément la fonction
     if direction_ennemi=='bas':
-        if donnees_cases[ennemis_IJ[0][1]+1][ennemis_IJ[0][0]]!=3: #si pas de mur, avance
+        if donnees_cases[j+1][i]!=3: #si pas de mur, avance
             Canevas.coords(ennemis[0],ennemis_XY[0][0],ennemis_XY[0][1]+50,ennemis_XY[0][2],ennemis_XY[0][3]+50,ennemis_XY[0][4],ennemis_XY[0][5]+50)
+        else:
+            Mafenetre.after(1, ennemis_avancent) #on relance instantanément la fonction
     Canevas.update()
-    Mafenetre.after(200, ennemis_avancent) #on relance la fonction
+    Mafenetre.after(500, ennemis_avancent) #on relance la fonction
 
 def conversion(x,y): #retourne les coordonées i et j
     convX=1.0
