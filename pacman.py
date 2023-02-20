@@ -67,6 +67,8 @@ def joueur_avance():
                 score() #on modifie le score
                 donnees_cases[j][i]=0 #remplace par du vide
                 Canevas.create_oval(a+20,b+20,c-20,d-20,fill='black')
+            elif donnees_cases[j][i]==2: #si étoile : ramasse
+                Canevas.create_oval(a+45,b+45,c-45,d-45,fill='black')
     if direction_joueur=='gauche':
         if donnees_cases[j][i-1]!=3:
             Canevas.coords(joueur,a-50,b,c-50,d)
@@ -77,6 +79,8 @@ def joueur_avance():
                 score() #on modifie le score
                 donnees_cases[j][i]=0 #remplace par du vide
                 Canevas.create_oval(a+20,b+20,c-20,d-20,fill='black')
+            elif donnees_cases[j][i]==2: #si étoile : ramasse
+                Canevas.create_oval(a+45,b+45,c-45,d-45,fill='black')
     if direction_joueur=='haut':
         if donnees_cases[j-1][i]!=3:
             Canevas.coords(joueur,a,b-50,c,d-50)
@@ -87,6 +91,8 @@ def joueur_avance():
                 score() #on modifie le score
                 donnees_cases[j][i]=0 #remplace par du vide
                 Canevas.create_oval(a+20,b+20,c-20,d-20,fill='black')
+            elif donnees_cases[j][i]==2: #si étoile : ramasse
+                Canevas.create_oval(a+45,b+45,c-45,d-45,fill='black')
     if direction_joueur=='bas':
         if donnees_cases[j+1][i]!=3:
             Canevas.coords(joueur,a,b+50,c,d+50)
@@ -97,6 +103,8 @@ def joueur_avance():
                 score() #on modifie le score
                 donnees_cases[j][i]=0 #remplace par du vide
                 Canevas.create_oval(a+20,b+20,c-20,d-20,fill='black')
+            elif donnees_cases[j][i]==2: #si étoile : ramasse
+                Canevas.create_oval(a+45,b+45,c-45,d-45,fill='black')
     [a,b,c,d]=Canevas.coords(joueur) #on prend les nouvelles coordonnées x y du joueur
     if donnees_cases[j][i]==0: #si le joueur est sur une case vide, il est nécessaire d'appliquer un autre oval jaune sur le joueur pour ne pas voir l'oval noir (quand la pièce a été ramassée)
         deuxieme_couche_joueur=Canevas.create_oval(a+5,b+5,c-5,d-5,fill="yellow",outline="")
@@ -153,6 +161,10 @@ def collision_ennemis(direction): #Renvoie True si ennemi peut avancer, ou false
             return(True)
         else:
             return(False)
+        
+def pouvoir(): #change la couleur des ennemie et les rend vulnerable au joueur
+    if donnees_cases[j][i]==2: #si joueur est sur une case ou ce situe une étoile
+        Canevas.itemconfig(ennemis[0], fill='green')
         
 def conversion(x,y): #retourne les coordonées i et j
     convX=1.0
