@@ -115,9 +115,9 @@ def ennemis_avancent(): #A FINIR (la fonction marche passs)
     global ennemis, direction_ennemi
     #liste des coordonnees x,y des ennemis :
     ennemis_XY = [Canevas.coords(ennemis[0]), #ennemi 1
-                Canevas.coords(ennemis[1]), #ennemi 2
-                Canevas.coords(ennemis[2]), #ennemi 3
-                Canevas.coords(ennemis[3])] #ennemi 4
+                  Canevas.coords(ennemis[1]), #ennemi 2
+                  Canevas.coords(ennemis[2]), #ennemi 3
+                  Canevas.coords(ennemis[3])] #ennemi 4
     [i,j]=[conversion(ennemis_XY[0][0], ennemis_XY[0][1])[0],conversion(ennemis_XY[0][0], ennemis_XY[0][1])[1]] #liste des coordonnées i et j des ennemis
     direction_ennemi=random.choice(['droite','gauche','haut','bas'])
     if collision_ennemis(direction_ennemi)==True:
@@ -134,7 +134,7 @@ def ennemis_avancent(): #A FINIR (la fonction marche passs)
     else:
         Mafenetre.after(1,ennemis_avancent)
 
-def collision_ennemis(direction): #Renvoie True si ennemi peut avancer, ou false si y a un mur
+def collision_ennemis(i,j, direction): #Renvoie True si ennemi peut avancer, ou false si y a un mur
     #liste des coordonnees x,y des ennemis :
     ennemis_XY = [Canevas.coords(ennemis[0]), #ennemi 1
                 Canevas.coords(ennemis[1]), #ennemi 2
@@ -142,22 +142,22 @@ def collision_ennemis(direction): #Renvoie True si ennemi peut avancer, ou false
                 Canevas.coords(ennemis[3])] #ennemi 4
     [i,j]=[conversion(ennemis_XY[0][0], ennemis_XY[0][1])[0],conversion(ennemis_XY[0][0], ennemis_XY[0][1])[1]] #liste des coordonnées i et j des ennemis
     if direction=='droite':
-        if donnees_cases[j][i+1]!=3:
+        if donnees_cases[j][i+2]!=3:
             return(True)
         else:
             return(False)
     if direction=='gauche':
-        if donnees_cases[j][i-1]!=3:
+        if donnees_cases[j][i-2]!=3:
             return(True)
         else:
             return(False)
     if direction=='haut':
-        if donnees_cases[j-1][i]!=3:
+        if donnees_cases[j-2][i]!=3:
             return(True)
         else:
             return(False)
     if direction=='bas':
-        if donnees_cases[j+1][i]!=3:
+        if donnees_cases[j+2][i]!=3:
             return(True)
         else:
             return(False)
