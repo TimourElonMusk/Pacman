@@ -111,28 +111,33 @@ def joueur_avance():
     Canevas.update()
     Mafenetre.after(200, joueur_avance) #on relance la fonction
 
-def ennemis_avancent(): #A FINIR (la fonction marche passs)
+def ennemis_avancent():
+    global numero_ennemi
     #liste des coordonnees x,y des ennemis :
     ennemis_XY = [Canevas.coords(ennemis[0]), #ennemi 1
                   Canevas.coords(ennemis[1]), #ennemi 2
                   Canevas.coords(ennemis[2]), #ennemi 3
                   Canevas.coords(ennemis[3])] #ennemi 4
-    for indice in range(4): #on fait avancer les ennemis un par un
-        [i,j]=[conversion(ennemis_XY[indice][0], ennemis_XY[indice][1])[0],conversion(ennemis_XY[indice][0], ennemis_XY[indice][1])[1]] #liste des coordonnées i et j des ennemis
-        direction_ennemi=random.choice(['droite','gauche','haut','bas'])
-        if collision_ennemis(i,j, direction_ennemi)==True:
-            if direction_ennemi=='droite':
-                Canevas.coords(ennemis[0], ennemis_XY[0][0]+50,ennemis_XY[0][1], ennemis_XY[0][2]+50,ennemis_XY[0][3], ennemis_XY[0][4]+50,ennemis_XY[0][5])
-            if direction_ennemi=='gauche':
-                Canevas.coords(ennemis[0], ennemis_XY[0][0]-50,ennemis_XY[0][1], ennemis_XY[0][2]-50,ennemis_XY[0][3], ennemis_XY[0][4]-50,ennemis_XY[0][5])
-            if direction_ennemi=='haut':
-                Canevas.coords(ennemis[0], ennemis_XY[0][0],ennemis_XY[0][1]-50, ennemis_XY[0][2],ennemis_XY[0][3]-50, ennemis_XY[0][4],ennemis_XY[0][5]-50)
-            if direction_ennemi=='bas':
-                Canevas.coords(ennemis[0], ennemis_XY[0][0],ennemis_XY[0][1]+50, ennemis_XY[0][2],ennemis_XY[0][3]+50, ennemis_XY[0][4],ennemis_XY[0][5]+50)
-            Canevas.update()
-            Mafenetre.after(200,ennemis_avancent)
-        else:
+    [i,j]=[conversion(ennemis_XY[numero_ennemi][0], ennemis_XY[numero_ennemi][1])[0],conversion(ennemis_XY[numero_ennemi][0], ennemis_XY[numero_ennemi][1])[1]] #liste des coordonnées i et j des ennemis
+    direction_ennemi=random.choice(['droite','gauche','haut','bas'])
+    if collision_ennemis(i,j, direction_ennemi)==True:
+        if direction_ennemi=='droite':
+            Canevas.coords(ennemis[numero_ennemi], ennemis_XY[numero_ennemi][0]+50,ennemis_XY[numero_ennemi][1], ennemis_XY[numero_ennemi][2]+50,ennemis_XY[numero_ennemi][3], ennemis_XY[numero_ennemi][4]+50,ennemis_XY[numero_ennemi][5])
+        if direction_ennemi=='gauche':
+            Canevas.coords(ennemis[numero_ennemi], ennemis_XY[numero_ennemi][0]-50,ennemis_XY[numero_ennemi][1], ennemis_XY[numero_ennemi][2]-50,ennemis_XY[numero_ennemi][3], ennemis_XY[numero_ennemi][4]-50,ennemis_XY[numero_ennemi][5])
+        if direction_ennemi=='haut':
+            Canevas.coords(ennemis[numero_ennemi], ennemis_XY[numero_ennemi][0],ennemis_XY[numero_ennemi][1]-50, ennemis_XY[numero_ennemi][2],ennemis_XY[numero_ennemi][3]-50, ennemis_XY[numero_ennemi][4],ennemis_XY[numero_ennemi][5]-50)
+        if direction_ennemi=='bas':
+            Canevas.coords(ennemis[numero_ennemi], ennemis_XY[numero_ennemi][0],ennemis_XY[numero_ennemi][1]+50, ennemis_XY[numero_ennemi][2],ennemis_XY[numero_ennemi][3]+50, ennemis_XY[numero_ennemi][4],ennemis_XY[numero_ennemi][5]+50)
+        Canevas.update()
+        if numero_ennemi<3:
+            numero_ennemi+=1 #on passe à l'ennemi suivant
             Mafenetre.after(1,ennemis_avancent)
+        else: #si le 4e ennemi vient d'avancer, on revient au premier ennemi
+            numero_ennemi==0 #on revient au premier ennemi
+            Mafenetre.after(200,ennemis_avancent)
+    else:
+        Mafenetre.after(1,ennemis_avancent)
 
 def collision_ennemis(i,j, direction): #Renvoie True si ennemi peut avancer, ou false si y a un mur
     if direction=='droite':
@@ -207,6 +212,8 @@ deuxieme_couche_joueur=None
 varScore='00'
 
 chiffre_score=None
+
+numero_ennemi=0
 #########################################################
 ########## Interface graphique ##########################
 ##########################################################
