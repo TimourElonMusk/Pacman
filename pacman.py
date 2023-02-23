@@ -112,58 +112,52 @@ def joueur_avance():
     Mafenetre.after(200, joueur_avance) #on relance la fonction
 
 def ennemis_avancent(): #A FINIR (la fonction marche passs)
-    global ennemis, direction_ennemi
     #liste des coordonnees x,y des ennemis :
     ennemis_XY = [Canevas.coords(ennemis[0]), #ennemi 1
                   Canevas.coords(ennemis[1]), #ennemi 2
                   Canevas.coords(ennemis[2]), #ennemi 3
                   Canevas.coords(ennemis[3])] #ennemi 4
-    [i,j]=[conversion(ennemis_XY[0][0], ennemis_XY[0][1])[0],conversion(ennemis_XY[0][0], ennemis_XY[0][1])[1]] #liste des coordonnées i et j des ennemis
-    direction_ennemi=random.choice(['droite','gauche','haut','bas'])
-    if collision_ennemis(direction_ennemi)==True:
-        if direction_ennemi=='droite':
-            Canevas.coords(ennemis[0], ennemis_XY[0][0]+50,ennemis_XY[0][1], ennemis_XY[0][2]+50,ennemis_XY[0][3], ennemis_XY[0][4]+50,ennemis_XY[0][5])
-        if direction_ennemi=='gauche':
-            Canevas.coords(ennemis[0], ennemis_XY[0][0]-50,ennemis_XY[0][1], ennemis_XY[0][2]-50,ennemis_XY[0][3], ennemis_XY[0][4]-50,ennemis_XY[0][5])
-        if direction_ennemi=='haut':
-            Canevas.coords(ennemis[0], ennemis_XY[0][0],ennemis_XY[0][1]-50, ennemis_XY[0][2],ennemis_XY[0][3]-50, ennemis_XY[0][4],ennemis_XY[0][5]-50)
-        if direction_ennemi=='bas':
-            Canevas.coords(ennemis[0], ennemis_XY[0][0],ennemis_XY[0][1]+50, ennemis_XY[0][2],ennemis_XY[0][3]+50, ennemis_XY[0][4],ennemis_XY[0][5]+50)
-        Canevas.update()
-        Mafenetre.after(200,ennemis_avancent)
-    else:
-        Mafenetre.after(1,ennemis_avancent)
+    for indice in range(4): #on fait avancer les ennemis un par un
+        [i,j]=[conversion(ennemis_XY[indice][0], ennemis_XY[indice][1])[0],conversion(ennemis_XY[indice][0], ennemis_XY[indice][1])[1]] #liste des coordonnées i et j des ennemis
+        direction_ennemi=random.choice(['droite','gauche','haut','bas'])
+        if collision_ennemis(i,j, direction_ennemi)==True:
+            if direction_ennemi=='droite':
+                Canevas.coords(ennemis[0], ennemis_XY[0][0]+50,ennemis_XY[0][1], ennemis_XY[0][2]+50,ennemis_XY[0][3], ennemis_XY[0][4]+50,ennemis_XY[0][5])
+            if direction_ennemi=='gauche':
+                Canevas.coords(ennemis[0], ennemis_XY[0][0]-50,ennemis_XY[0][1], ennemis_XY[0][2]-50,ennemis_XY[0][3], ennemis_XY[0][4]-50,ennemis_XY[0][5])
+            if direction_ennemi=='haut':
+                Canevas.coords(ennemis[0], ennemis_XY[0][0],ennemis_XY[0][1]-50, ennemis_XY[0][2],ennemis_XY[0][3]-50, ennemis_XY[0][4],ennemis_XY[0][5]-50)
+            if direction_ennemi=='bas':
+                Canevas.coords(ennemis[0], ennemis_XY[0][0],ennemis_XY[0][1]+50, ennemis_XY[0][2],ennemis_XY[0][3]+50, ennemis_XY[0][4],ennemis_XY[0][5]+50)
+            Canevas.update()
+            Mafenetre.after(200,ennemis_avancent)
+        else:
+            Mafenetre.after(1,ennemis_avancent)
 
 def collision_ennemis(i,j, direction): #Renvoie True si ennemi peut avancer, ou false si y a un mur
-    #liste des coordonnees x,y des ennemis :
-    ennemis_XY = [Canevas.coords(ennemis[0]), #ennemi 1
-                Canevas.coords(ennemis[1]), #ennemi 2
-                Canevas.coords(ennemis[2]), #ennemi 3
-                Canevas.coords(ennemis[3])] #ennemi 4
-    [i,j]=[conversion(ennemis_XY[0][0], ennemis_XY[0][1])[0],conversion(ennemis_XY[0][0], ennemis_XY[0][1])[1]] #liste des coordonnées i et j des ennemis
     if direction=='droite':
-        if donnees_cases[j][i+2]!=3:
+        if donnees_cases[j-1][i]!=3:
             return(True)
         else:
             return(False)
     if direction=='gauche':
-        if donnees_cases[j][i-2]!=3:
+        if donnees_cases[j-1][i-2]!=3:
             return(True)
         else:
             return(False)
     if direction=='haut':
-        if donnees_cases[j-2][i]!=3:
+        if donnees_cases[j-2][i-1]!=3:
             return(True)
         else:
             return(False)
     if direction=='bas':
-        if donnees_cases[j+2][i]!=3:
+        if donnees_cases[j][i-1]!=3:
             return(True)
         else:
             return(False)
         
-def pouvoir(): #change la couleur des ennemie et les rend vulnerable au joueur
-    if donnees_cases[j][i]==2: #si joueur est sur une case ou ce situe une étoile
+def pouvoir(): #change la couleur des ennemis et les rend vulnerables au joueur
+    if donnees_cases[j][i]==2: #si joueur est sur une case ou se situe une étoile
         Canevas.itemconfig(ennemis[0], fill='green')
         
 def conversion(x,y): #retourne les coordonées i et j
@@ -185,7 +179,6 @@ def score(): #augmentation score
     global chiffre_score
     Canevas.delete(chiffre_score)
     chiffre_score=Canevas.create_text(1300,75,text=varScore,fill="#34eba1",font=Mapolice)
-
 ##########################################################
 ##########    Variables ##################################
 ##########################################################
