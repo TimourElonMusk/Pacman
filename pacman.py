@@ -134,7 +134,7 @@ def ennemis_avancent():
             numero_ennemi+=1 #on passe à l'ennemi suivant
             Mafenetre.after(1,ennemis_avancent)
         else: #si le 4e ennemi vient d'avancer, on revient au premier ennemi
-            numero_ennemi==0 #on revient au premier ennemi
+            numero_ennemi=0 #on revient au premier ennemi
             Mafenetre.after(200,ennemis_avancent)
     else:
         Mafenetre.after(1,ennemis_avancent)
