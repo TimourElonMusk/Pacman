@@ -113,6 +113,11 @@ def joueur_avance():
 
 def ennemis_avancent():
     global numero_ennemi
+    if numero_ennemi==0 and deuxieme_couche_ennemi!=[]:
+        Canevas.delete(deuxieme_couche_ennemi[0])
+        Canevas.delete(deuxieme_couche_ennemi[1])
+        Canevas.delete(deuxieme_couche_ennemi[2])
+        Canevas.delete(deuxieme_couche_ennemi[3])
     #liste des coordonnees x,y des ennemis :
     ennemis_XY = [Canevas.coords(ennemis[0]), #ennemi 1
                   Canevas.coords(ennemis[1]), #ennemi 2
@@ -130,6 +135,9 @@ def ennemis_avancent():
         if direction_ennemi=='bas':
             Canevas.coords(ennemis[numero_ennemi], ennemis_XY[numero_ennemi][0],ennemis_XY[numero_ennemi][1]+50, ennemis_XY[numero_ennemi][2],ennemis_XY[numero_ennemi][3]+50, ennemis_XY[numero_ennemi][4],ennemis_XY[numero_ennemi][5]+50)
         Canevas.update()
+        if donnees_cases[j][i]==0:
+            deuxieme_couche_ennemi.append(Canevas.create_polygon(ennemis_XY[0][0],ennemis_XY[0][1],ennemis_XY[0][2],ennemis_XY[0][3],ennemis_XY[0][4],ennemis_XY[0][5], fill='brown'))
+            Canevas.update()
         if numero_ennemi<3:
             numero_ennemi+=1 #on passe à l'ennemi suivant
             Mafenetre.after(1,ennemis_avancent)
@@ -214,6 +222,8 @@ varScore='00'
 chiffre_score=None
 
 numero_ennemi=0
+
+deuxieme_couche_ennemi=[]
 #########################################################
 ########## Interface graphique ##########################
 ##########################################################
